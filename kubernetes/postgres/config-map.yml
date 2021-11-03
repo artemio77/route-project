@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-db-config
+  labels:
+    app: postgresql-db
+data:
+  POSTGRES_DB: eventuate
+  POSTGRES_USER: eventuate
+  POSTGRES_PASSWORD: eventuate
+  PGDATA: /data/pgdata
+  USE_DB_ID: "false"
+  USE_JSON_PAYLOAD_AND_HEADERS: "true"
