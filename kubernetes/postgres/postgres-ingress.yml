@@ -12,6 +12,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: postgres-svc
+                name: postgres-db-lb
                 port:
                   number: 5432
