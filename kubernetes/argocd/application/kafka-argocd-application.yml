@@ -12,6 +12,9 @@ spec:
     path: kubernetes/kafka
     repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
   project: route-project
   syncPolicy:
     automated:
