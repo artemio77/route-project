@@ -107,7 +107,7 @@ protocolHttp: true
 service:
   type: ClusterIP
   # Dashboard service port
-  externalPort: 80
+  externalPort: 443
 
   ## LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
   ## set allowed inbound rules on the security group assigned to the master load balancer
@@ -160,20 +160,20 @@ ingress:
   ## Custom Kubernetes Dashboard Ingress paths. Will override default paths.
   ##
   customPaths: [ ]
-    - pathType: ImplementationSpecific
-      backend:
-        service:
-          name: ssl-redirect
-          port:
-            name: use-annotation
-    - pathType: ImplementationSpecific
-      backend:
-        service:
-          name: >-
-            {{ include "kubernetes-dashboard.fullname" . }}
-          port:
-            # Don't use string here, use only integer value!
-            number: 443
+  #  - pathType: ImplementationSpecific
+  #    backend:
+  #      service:
+  #        name: ssl-redirect
+  #        port:
+  #          name: use-annotation
+  #  - pathType: ImplementationSpecific
+  #    backend:
+  #      service:
+  #        name: >-
+  #          {{ include "kubernetes-dashboard.fullname" . }}
+  #        port:
+  #          # Don't use string here, use only integer value!
+  #          number: 443
   ## Kubernetes Dashboard Ingress hostnames
   ## Must be provided if Ingress is enabled
   ##
@@ -196,7 +196,7 @@ settings:
   # itemsPerPage: 10
   ## Number of seconds between every auto-refresh of logs
   # logsAutoRefreshTimeInterval: 5
-## Number of seconds between every auto-refresh of every resource. Set 0 to disable
+  ## Number of seconds between every auto-refresh of every resource. Set 0 to disable
 # resourceAutoRefreshTimeInterval: 5
 ## Hide all access denied warnings in the notification panel
 # disableAccessDeniedNotifications: false
@@ -207,7 +207,7 @@ pinnedCRDs:
   # - kind: customresourcedefinition
   ##  Fully qualified name of a CRD
   #   name: prometheuses.monitoring.coreos.com
-##  Display name
+  ##  Display name
 #   displayName: Prometheus
 ##  Is this CRD namespaced?
 #   namespaced: true
