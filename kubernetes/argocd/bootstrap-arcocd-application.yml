@@ -4,7 +4,7 @@ metadata:
   name: bootstrap-cluster-application
 spec:
   destination:
-    namespace: bootstrap-cluster
+    namespace: default
     server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/argocd/application
@@ -15,5 +15,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
