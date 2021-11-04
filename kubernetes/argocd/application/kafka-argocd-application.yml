@@ -5,9 +5,6 @@ metadata:
   namespace: kafka-cluster
 spec:
   project: route-project
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: kafka-cluster
   source:
     repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     path: kubernetes/kafka
@@ -25,3 +22,6 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kafka-cluster
