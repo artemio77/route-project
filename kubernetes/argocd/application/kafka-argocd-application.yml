@@ -10,7 +10,6 @@ spec:
     server: 'https://kubernetes.default.svc'
     namespace: kafka-cluster
   project: route-project
-
   source:
     repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     path: kubernetes/kafka
@@ -23,8 +22,11 @@ spec:
           value: '8'
         - name: defaultReplicationFactor
           value: '2'
+
   syncPolicy:
-    prune: true
-    selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
