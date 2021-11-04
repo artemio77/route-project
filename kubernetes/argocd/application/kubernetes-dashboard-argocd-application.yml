@@ -1,19 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bootstrap-cluster
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: default
+    name: ''
+    namespace: kubernetes-dashboard
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/argocd/application
+    path: kubernetes/dashboard
     repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
   project: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
