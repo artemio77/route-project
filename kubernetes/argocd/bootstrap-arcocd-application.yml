@@ -10,7 +10,7 @@ spec:
     path: kubernetes/argocd/application
     repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     targetRevision: HEAD
-  project: route-project
+  project: default
   syncPolicy:
     automated:
       selfHeal: true
