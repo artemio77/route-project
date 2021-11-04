@@ -7,10 +7,10 @@ spec:
     namespace: bootstrap-cluster
     server: 'https://kubernetes.default.svc'
   source:
-    path: argocd/application
-    repoURL: 'https://gitlab.com/route-project/deploy-config/'
+    path: kubernetes/argocd/application
+    repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     targetRevision: HEAD
-  project: default
+  project: route-project
   syncPolicy:
     automated:
       prune: true
