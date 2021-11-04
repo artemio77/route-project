@@ -7,12 +7,6 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: route-project
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: kafka-cluster
@@ -28,3 +22,8 @@ spec:
           value: '8'
         - name: defaultReplicationFactor
           value: '2'
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
