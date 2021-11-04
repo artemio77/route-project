@@ -107,7 +107,7 @@ protocolHttp: true
 service:
   type: ClusterIP
   # Dashboard service port
-  externalPort: 443
+  externalPort: 80
 
   ## LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
   ## set allowed inbound rules on the security group assigned to the master load balancer
