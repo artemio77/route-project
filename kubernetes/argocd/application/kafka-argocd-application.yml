@@ -11,8 +11,6 @@ spec:
     namespace: kafka-cluster
   project: route-project
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
