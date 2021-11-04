@@ -6,9 +6,6 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: kafka-cluster
   project: route-project
   syncPolicy:
     automated:
@@ -16,6 +13,9 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kafka-cluster
   source:
     repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     path: kubernetes/kafka
