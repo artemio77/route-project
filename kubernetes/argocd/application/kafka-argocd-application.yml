@@ -4,24 +4,20 @@ metadata:
   name: kafka
   namespace: kafka-cluster
 spec:
-  project: route-project
+  destination:
+    name: ''
+    namespace: kafka-cluster
+    server: 'https://kubernetes.default.svc'
   source:
-    repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     path: kubernetes/kafka
+    repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     targetRevision: HEAD
-    helm:
-      parameters:
-        - name: replicaCount
-          value: '3'
-        - name: numPartitions
-          value: '8'
-        - name: defaultReplicationFactor
-          value: '2'
+  project: route-project
   syncPolicy:
     automated:
       selfHeal: true
+      prune: true
     syncOptions:
       - CreateNamespace=true
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: kafka-cluster
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=true

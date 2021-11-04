@@ -13,5 +13,4 @@ spec:
   project: route-project
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true

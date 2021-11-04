@@ -182,7 +182,7 @@ numIoThreads: 8
 numNetworkThreads: 3
 ## @param numPartitions The default number of log partitions per topic
 ##
-numPartitions: 1
+numPartitions: 8
 ## @param numRecoveryThreadsPerDataDir The number of threads per data directory to be used for log recovery at startup and flushing at shutdown
 ##
 numRecoveryThreadsPerDataDir: 1
@@ -1201,9 +1201,9 @@ provisioning:
   ##
   enabled: false
   ## @param provisioning.numPartitions Default number of partitions for topics when unspecified.
-  numPartitions: 1
+  numPartitions: 8
   ## @param provisioning.replicationFactor Default replication factor for topics when unspecified.
-  replicationFactor: 1
+  replicationFactor: 2
   ## @param provisioning.schedulerName Name of the k8s scheduler (other than default) for kafka provisioning
   ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
   ##
