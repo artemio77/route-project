@@ -2,11 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kafka
-  namespace: kafka-cluster
+  namespace: kafka-cluster-space
 spec:
   destination:
     name: ''
-    namespace: kafka-cluster
+    namespace: kafka-cluster-space
     server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/kafka
@@ -15,7 +15,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
-  project: route-project
+  project: kafka-cluster-space
   syncPolicy:
     automated:
       selfHeal: true
