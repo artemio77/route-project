@@ -177,8 +177,8 @@ ingress:
   ## Kubernetes Dashboard Ingress hostnames
   ## Must be provided if Ingress is enabled
   ##
-  # hosts:
-  #   - kubernetes-dashboard.domain.com
+   hosts:
+     - kubernetes-dashboard.domain.com
   ## Kubernetes Dashboard Ingress TLS configuration
   ## Secrets must be manually created in the namespace
   ##
