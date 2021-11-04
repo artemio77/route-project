@@ -1,21 +1,20 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-project: route-project
-source:
-  repoURL: 'https://gitlab.com/route-project/deploy-config.git'
-  path: kubernetes/postgresql
-  targetRevision: HEAD
-  helm:
-    parameters:
-      - name: postgresql.postgresPassword
-        value: postgresql
-      - name: postgresql.password
-        value: postgresql
-destination:
-  server: 'https://kubernetes.default.svc'
-  namespace: postgresql
-syncPolicy:
-  automated: {}
-  syncOptions:
-    - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#project: route-project
+#source:
+#  repoURL: 'https://gitlab.com/route-project/deploy-config.git'
+#  path: kubernetes/postgresql
+#  targetRevision: HEAD
+#  helm:
+#    parameters:
+#      - name: postgresql.postgresPassword
+#        value: postgresql
+#      - name: postgresql.password
+#        value: postgresql
+#destination:
+#  server: 'https://kubernetes.default.svc'
+#  namespace: postgresql
+#syncPolicy:
+#  automated: {}
+#  syncOptions:
+#    - CreateNamespace=true

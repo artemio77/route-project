@@ -1,24 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-project: route-project
-source:
-  repoURL: 'https://gitlab.com/route-project/deploy-config.git'
-  path: kubernetes/kafka
-  targetRevision: HEAD
-  helm:
-    parameters:
-      - name: replicaCount
-        value: '3'
-      - name: numPartitions
-        value: '8'
-      - name: defaultReplicationFactor
-        value: '2'
-destination:
-  server: 'https://kubernetes.default.svc'
-  namespace: kafka
-syncPolicy:
-  prune: true
-  selfHeal: true
-  syncOptions:
-    - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
+metadata:
+  name: kafka
+  namespace: kafka-cluster
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kafka-cluster
+  project: route-project
+
+  source:
+    repoURL: 'https://gitlab.com/route-project/deploy-config.git'
+    path: kubernetes/kafka
+    targetRevision: HEAD
+    helm:
+      parameters:
+        - name: replicaCount
+          value: '3'
+        - name: numPartitions
+          value: '8'
+        - name: defaultReplicationFactor
+          value: '2'
+  syncPolicy:
+    prune: true
+    selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
