@@ -14,8 +14,8 @@ spec:
     automated:
       prune: true
       selfHeal: true
-  syncOptions:
-    - CreateNamespace=true
+    syncOptions:
+      - CreateNamespace=true
   source:
     repoURL: 'https://gitlab.com/route-project/deploy-config.git'
     path: kubernetes/kafka
