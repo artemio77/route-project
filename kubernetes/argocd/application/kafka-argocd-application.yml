@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: kafka
   namespace: kafka-cluster
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: route-project
   destination:
