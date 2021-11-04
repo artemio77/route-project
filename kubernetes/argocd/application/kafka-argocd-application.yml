@@ -1,0 +1,22 @@
+project: route-project
+source:
+  repoURL: 'https://gitlab.com/route-project/deploy-config.git'
+  path: kubernetes/kafka
+  targetRevision: HEAD
+  helm:
+    parameters:
+      - name: replicaCount
+        value: '3'
+      - name: numPartitions
+        value: '8'
+      - name: defaultReplicationFactor
+        value: '2'
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: kafka
+syncPolicy:
+  prune: true
+  selfHeal: true
+  syncOptions:
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
