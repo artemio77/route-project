@@ -34,9 +34,9 @@ labels: { }
 
 ## Additional container arguments
 ##
-# extraArgs:
-#   - --enable-skip-login
-#   - --enable-insecure-login
+extraArgs:
+  - --enable-skip-login
+  - --enable-insecure-login
 #   - --system-banner="Welcome to Kubernetes"
 
 ## Additional container environment variables
@@ -102,7 +102,7 @@ resources:
 ## Serve application over HTTP without TLS
 ##
 ## Note: If set to true, you may want to add --enable-insecure-login to extraArgs
-protocolHttp: false
+protocolHttp: true
 
 service:
   type: ClusterIP
@@ -135,7 +135,7 @@ ingress:
 
     ## Kubernetes Dashboard Ingress labels
     # labels:
-    #   key: value
+  #   key: value
 
   ## Kubernetes Dashboard Ingress annotations
   annotations:
@@ -179,7 +179,7 @@ ingress:
   ## Must be provided if Ingress is enabled
   ##
   hosts:
-     - kubernetes-dashboard.domain.com
+    - kubernetes-dashboard.domain.com
   ## Kubernetes Dashboard Ingress TLS configuration
   ## Secrets must be manually created in the namespace
   ##
@@ -198,7 +198,7 @@ settings:
   ## Number of seconds between every auto-refresh of logs
   # logsAutoRefreshTimeInterval: 5
   ## Number of seconds between every auto-refresh of every resource. Set 0 to disable
-  # resourceAutoRefreshTimeInterval: 5
+# resourceAutoRefreshTimeInterval: 5
 ## Hide all access denied warnings in the notification panel
 # disableAccessDeniedNotifications: false
 
@@ -209,7 +209,7 @@ pinnedCRDs:
   ##  Fully qualified name of a CRD
   #   name: prometheuses.monitoring.coreos.com
   ##  Display name
-  #   displayName: Prometheus
+#   displayName: Prometheus
 ##  Is this CRD namespaced?
 #   namespaced: true
 
