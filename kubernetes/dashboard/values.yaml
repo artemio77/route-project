@@ -140,6 +140,8 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 
     ## If you plan to use TLS backend with enableInsecureLogin set to false
     ## (default), you need to uncomment the below.
@@ -196,7 +198,7 @@ settings:
   # itemsPerPage: 10
   ## Number of seconds between every auto-refresh of logs
   # logsAutoRefreshTimeInterval: 5
-  ## Number of seconds between every auto-refresh of every resource. Set 0 to disable
+## Number of seconds between every auto-refresh of every resource. Set 0 to disable
 # resourceAutoRefreshTimeInterval: 5
 ## Hide all access denied warnings in the notification panel
 # disableAccessDeniedNotifications: false
@@ -207,7 +209,7 @@ pinnedCRDs:
   # - kind: customresourcedefinition
   ##  Fully qualified name of a CRD
   #   name: prometheuses.monitoring.coreos.com
-  ##  Display name
+##  Display name
 #   displayName: Prometheus
 ##  Is this CRD namespaced?
 #   namespaced: true
