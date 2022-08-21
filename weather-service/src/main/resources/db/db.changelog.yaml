@@ -1,0 +1,29 @@
+databaseChangeLog:
+- changeSet:
+    id: 1636587636061-4
+    author: artemderevets (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: pk_rss_feed_last_update_v1
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_updated
+            type: TIMESTAMP WITHOUT TIME ZONE
+        tableName: rss_feed_last_update_v1
+- changeSet:
+    id: 1636587636061-6
+    author: artemderevets (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: id
+        constraintName: uc_rss_feed_last_update_v1_id
+        tableName: rss_feed_last_update_v1
+

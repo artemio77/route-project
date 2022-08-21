@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="route-api-module" />
+        <module name="weather-service" />
+        <module name="route-service" />
+        <module name="mapstruct-module" />
+        <module name="saga-orchestrator" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="route-analyze-service" target="11" />
+      <module name="route-analyze-service.main" target="11" />
+      <module name="route-analyze-service.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="saga-orchestrator" options="" />
+      <module name="weather-service" options="" />
+    </option>
+  </component>
+</project>

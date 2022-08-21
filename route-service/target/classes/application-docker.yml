@@ -1,0 +1,18 @@
+spring:
+  data:
+    mongodb:
+      auto-index-creation: true
+      database: local
+      host: mongodb
+      port: 27017
+  kafka:
+    bootstrap-servers: http://kafka:9092
+  reactor:
+    debug-agent:
+      enabled: false
+  security:
+    oauth2:
+      client:
+        provider:
+          spring:
+            issuer-uri: http://authorization-service:9000

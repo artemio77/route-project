@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.gmailderevets.artem
+testFramework: spock
+sourceLanguage: java
+buildTool: maven
+features: [ annotation-api, app-name, consul, discovery-consul, graalvm, http-client, java, java-application, jib, logback, maven, netty-server, reactor, reactor-http-client, readme, shade, spock, tracing-zipkin, yaml ]

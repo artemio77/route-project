@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" ddlActionDbType="postgres" isDiffGenerationLicenceAccepted="true">
+    <option name="liquibaseDirectory" value="db/changelog/2021/11" />
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="sourceDbValue" value="1e8e1fa7-c4c5-4957-bbad-65e2730dc6c6" />
+    <option name="sourceModelValue" value="Default" />
+    <option name="targetDbValue" value="e8b9c319-2a10-423f-9a80-2e632fecf54f" />
+    <option name="targetSnapshotValue" value="$PROJECT_DIR$/route-service/test.json" />
+    <option name="isSnapshotDb" value="false" />
+    <option name="snapshotDbValue" value="5ac065b1-b72d-4968-8368-0a78492c1bd0" />
+    <option name="snapshotModelValue" value="Default" />
+    <option name="snapshotDirValue" value="$PROJECT_DIR$" />
+    <option name="updateChangeLogPath" value="" />
+    <option name="updateDbConnectionName" value="e8b9c319-2a10-423f-9a80-2e632fecf54f" />
+  </component>
+</project>

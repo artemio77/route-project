@@ -1,0 +1,10 @@
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/model/rest/PlaceApi.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/model/rest/RouteInformationApi.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/event/RouteCreatedEvent.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/command/StartCreateRouteSagaCommand.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/model/rest/StatisticApi.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/command/RouteCommand.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/model/rest/PointApi.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/event/RouteEnrichedEvent.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/model/rest/RouteApi.java
+/home/artemderevets/Documents/route-project/common-api-parent/route-api-module/src/main/java/com/gmail/derevets/artem/api/event/RouteEvent.java

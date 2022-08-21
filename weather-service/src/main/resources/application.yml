@@ -1,0 +1,47 @@
+server:
+  port: 3030
+spring:
+  application:
+    name: weather-service
+  reactor:
+    debug-agent:
+      enabled: true
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/eventuate
+    username: eventuate
+    password: eventuate
+    name: eventuate
+  liquibase:
+    change-log: classpath:/db/db.changelog.yaml
+    url: jdbc:postgresql://localhost:5432/eventuate
+    user: eventuate
+    password: eventuate
+
+eventuate:
+  reactive:
+    db:
+      driver: postgres
+      host: localhost
+      port: 5432
+      username: eventuate
+      password: eventuate
+      database: eventuate
+
+
+cdc.service.url: http://localhost:8099
+eventuatelocal.kafka.bootstrap.servers: ${DOCKER_HOST_IP:localhost}:9092
+eventuatelocal.zookeeper.connection.string: ${DOCKER_HOST_IP:localhost}:2181
+eventuate.outbox.id: 1
+
+
+redisson:
+  mode: single
+  address: redis://localhost:6379
+  connect-timeout: 1000
+  timeout: 500
+  retry-attempts: 1
+  retry-intervals: 100
+
+jackson:
+  xml:
+    default-use-wrapper: false

@@ -1,0 +1,249 @@
+# ------------------- Dashboard Secret ------------------- #
+
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard-certs
+  namespace: kube-system
+type: Opaque
+
+---
+# ------------------- Dashboard Service Account ------------------- #
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+
+---
+# ------------------- Dashboard Role & Role Binding ------------------- #
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kubernetes-dashboard-minimal
+  namespace: kube-system
+rules:
+  # Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.
+  - apiGroups: [ "" ]
+    resources: [ "secrets" ]
+    verbs: [ "create" ]
+    # Allow Dashboard to create 'kubernetes-dashboard-settings' config map.
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    verbs: [ "create" ]
+    # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
+  - apiGroups: [ "" ]
+    resources: [ "secrets" ]
+    resourceNames: [ "kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs" ]
+    verbs: [ "get", "update", "delete" ]
+    # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    resourceNames: [ "kubernetes-dashboard-settings" ]
+    verbs: [ "get", "update" ]
+    # Allow Dashboard to get metrics from heapster.
+  - apiGroups: [ "" ]
+    resources: [ "services" ]
+    resourceNames: [ "heapster" ]
+    verbs:
+      - watch
+  - apiGroups: [ "" ]
+    resources: [ "services/proxy" ]
+    resourceNames: [ "heapster", "http:heapster:", "https:heapster:" ]
+    verbs: [ "get" ]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kubernetes-dashboard-minimal
+  namespace: kube-system
+  labels:
+    k8s-app: kubernetes-dashboard
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kubernetes-dashboard-minimal
+subjects:
+  - kind: ServiceAccount
+    name: kubernetes-dashboard
+    namespace: kube-system
+---
+# TODO Well I added this and it didn't really do anything, should probably remove this from the cluster when we remove the yanml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubernetes-dashboard-status
+  namespace: kube-system
+  labels:
+    k8s-app: kubernetes-dashboard
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-status
+subjects:
+  - kind: ServiceAccount
+    name: kubernetes-dashboard
+    namespace: kube-system
+---
+# TODO It would be good to restrict this a bit, i mean, really it should READONLY!
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubernetes-dashboard-admin
+  namespace: kube-system
+  labels:
+    k8s-app: kubernetes-dashboard
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: kubernetes-dashboard
+    namespace: kube-system
+---
+# ------------------- Dashboard Deployment ------------------- #
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: kubernetes-dashboard
+  template:
+    metadata:
+      labels:
+        k8s-app: kubernetes-dashboard
+    spec:
+      containers:
+        - name: kubernetes-dashboard
+          image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.2
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+          args:
+          # Uncomment the following line to manually specify Kubernetes API server Host
+          # If not specified, Dashboard will attempt to auto discover the API server and connect
+          # to it. Uncomment only if the default does not work.
+          # - --apiserver-host=http://my-address:port
+          volumeMounts:
+            - name: kubernetes-dashboard-certs
+              mountPath: /certs
+              # Create on-disk volume to store exec logs
+            - mountPath: /tmp
+              name: tmp-volume
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+      volumes:
+        - name: kubernetes-dashboard-certs
+          secret:
+            secretName: kubernetes-dashboard-certs
+        - name: tmp-volume
+          emptyDir: { }
+      serviceAccountName: kubernetes-dashboard
+      # Comment the following tolerations if Dashboard must not be deployed on master
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+
+---
+# ------------------- Dashboard Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  ports:
+    - name: regular
+      port: 80
+      targetPort: 9090
+    - name: secure
+      port: 443
+      targetPort: 8443
+  selector:
+    k8s-app: kubernetes-dashboard
+---
+apiVersion: v1
+data:
+  auth: ZGFzaHVzZXI6JGFwcjEkUjQuaEZ3REMkMWpBS2tSY2VBenBYbDg4a3lhUDRrMQo=
+kind: Secret
+metadata:
+  name: kubernetes-dashboard-ingress-auth
+  namespace: kube-system
+type: Opaque
+# User: dashuser, Pass: dashpass
+#https://github.com/kubernetes/contrib/tree/master/ingress/controllers/nginx/examples/auth
+#htpasswd -c auth dashuser
+#kubectl create secret generic kubernetes-dashboard-ingress-auth --from-file=auth --namespace=kube-system
+#kubectl get secret kubernetes-dashboard-ingress-auth -o yaml --namespace=kube-system
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    ingress.kubernetes.io/auth-type: "basic"
+    ingress.kubernetes.io/auth-secret: "kubernetes-dashboard-ingress-auth"
+spec:
+  rules:
+    - host: kubernetes-dashboard.k8s-example.derevets.com
+      http:
+        paths:
+          - backend:
+              service:
+                name:  kubernetes-dashboard
+                port:
+                  number:  80
+            pathType: Prefix
+            path: /
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard-secure
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    ingress.kubernetes.io/auth-type: "basic"
+    ingress.kubernetes.io/auth-secret: "kubernetes-dashboard-ingress-auth"
+spec:
+  rules:
+    - host: kubernetes-dashboard-secure.k8s-example.derevets.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: kubernetes-dashboard
+                port:
+                  number: 443
+            pathType: Prefix
+            path: /

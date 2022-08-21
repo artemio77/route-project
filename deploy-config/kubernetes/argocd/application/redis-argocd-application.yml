@@ -1,0 +1,19 @@
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#project: route-project
+#source:
+#  repoURL: 'https://gitlab.com/route-project/deploy-config.git'
+#  path: kubernetes/redis-cluster
+#  targetRevision: HEAD
+#  helm:
+#    valueFiles:
+#      - values.yaml
+#destination:
+#  server: 'https://kubernetes.default.svc'
+#  namespace: redis-cluster
+#syncPolicy:
+#  automated:
+#    prune: true
+#    selfHeal: true
+#  syncOptions:
+#    - CreateNamespace=true
